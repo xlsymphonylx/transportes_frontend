@@ -1,8 +1,9 @@
 <template>
   <div>
-    <common-form :fields="fields" />
+    <common-form :fields="fields" @save="create" />
     <div class="margintop">
       <v-data-table
+        :items="rows"
         :headers="headers"
         :items-per-page="5"
         class="elevation-1"
@@ -16,24 +17,31 @@
 
 <script>
 import CommonForm from "../components/CommonForm.vue";
+import accionesService from "../services/accionesService";
+
 export default {
   components: { CommonForm },
   data: () => ({
     fields: [
       {
-        name: "codigo",
+        name: "carga",
         type: "text",
-        label: "Codigo",
+        label: "Carga",
       },
       {
-        name: "placa",
+        name: "destino",
         type: "text",
-        label: "Placa",
+        label: "Destino",
       },
       {
-        name: "marca",
+        name: "procedencia",
         type: "text",
-        label: "Marca",
+        label: "Procedencia",
+      },
+      {
+        name: "fecha",
+        type: "text",
+        label: "Fecha",
       },
     ],
 
@@ -44,7 +52,21 @@ export default {
       { text: "Destino", value: "destino" },
       { text: "Carga", value: "carga" },
     ],
+    rows: [],
   }),
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    async getData() {
+      const { data } = await accionesService.getAll();
+      this.rows = data;
+    },
+    async create(data) {
+      await accionesService.create(data);
+      this.getData();
+    },
+  },
 };
 </script>
 

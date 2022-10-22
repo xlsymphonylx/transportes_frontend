@@ -1,10 +1,11 @@
 <template>
   <div>
-    <common-form :fields="fields" />
+    <common-form :fields="fields" @save="create" />
     <div class="margintop">
       <v-data-table
         :headers="headers"
         :items-per-page="5"
+        :items="rows"
         class="elevation-1"
         hide-default-footer
         no-data-text="No Resultados"
@@ -16,6 +17,7 @@
 
 <script>
 import CommonForm from "../components/CommonForm.vue";
+import transportistaService from "../services/transportistaService";
 export default {
   components: { CommonForm },
   data: () => ({
@@ -37,7 +39,21 @@ export default {
       { text: "Nombre", value: "name" },
       { text: "Direccion", value: "address" },
     ],
+    rows: [],
   }),
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    async getData() {
+      const { data } = await transportistaService.getAll();
+      this.rows = data;
+    },
+    async create(data) {
+      await transportistaService.create(data);
+      this.getData();
+    },
+  },
 };
 </script>
 

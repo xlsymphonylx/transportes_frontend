@@ -3,9 +3,9 @@ import axiosConfig from "../utils/axiosConfig";
 
 export default {
   getAll() {
-    return axios.get("/api/tipo-accion", axiosConfig);
+    return axios.get("/api/piloto", axiosConfig);
   },
   create(data) {
-    return axios.post("/api/tipo-accion", data, axiosConfig);
+    return axios.post("/api/piloto", data, axiosConfig);
   },
 };

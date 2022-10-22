@@ -19,7 +19,7 @@
   <form @submit.prevent="submit">
     <div class="form-group" v-for="field in fields" :key="field.name">
       <v-text-field
-        v-model="data[field.name]"
+        v-model="formData[field.name]"
         :error-messages="errors"
         :label="field.label"
         required
@@ -50,47 +50,24 @@ export default {
         },
       ],
     },
-  },
-  data: () => ({
-    invalid: null,
-    errors: null,
     title: {
       type: String,
       default: "PLACEHOLDER",
     },
-    data: {
-      fields: [
-        {
-          name: "codigo",
-          type: "text",
-          label: "Codigo",
-        },
-        {
-          name: "placa",
-          type: "text",
-          label: "Placa",
-        },
-        {
-          name: "marca",
-          type: "text",
-          label: "Marca",
-        },
-      ],
-
-      headers: [
-        { text: "Codigo", value: "calories" },
-        { text: "Placa", value: "fat" },
-        { text: "Marca", value: "carbs" },
-      ],
-    },
+  },
+  data: () => ({
+    invalid: null,
+    errors: null,
+    submit: false,
+    formData: {},
   }),
   methods: {
     onSave() {
-      this.$emit("save", this.data);
+      this.$emit("save", this.formData);
     },
     onCancel() {
       this.fields.forEach((field) => {
-        this.data[field] = "";
+        this.formData[field] = "";
       });
     },
   },
