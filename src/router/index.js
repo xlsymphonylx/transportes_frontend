@@ -9,6 +9,7 @@ const routerOptions = [
   { path: "/acciones", component: "Acciones" },
   { path: "/tipo-acciones", component: "TipoAcciones" },
   { path: "/cabezal", component: "Cabezal" },
+  { path: "/contacto", component: "Contacto" },
   { path: "/", component: "Home" },
   { path: "*", component: "NotFound" },
 ];

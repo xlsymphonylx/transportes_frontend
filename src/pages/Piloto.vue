@@ -6,11 +6,19 @@
         :items="rows"
         :headers="headers"
         :items-per-page="5"
+        :header-props="headerProps"
         class="elevation-1"
         hide-default-footer
         no-data-text="No Resultados"
         no-results-text="No Resultados"
-      ></v-data-table>
+      >
+        <template #[`item.actions`]="{ item }">
+          <v-icon small class="mr-2" @click="readOne(item.id)">
+            mdi-pencil
+          </v-icon>
+          <v-icon small @click="deleteItem(item.id)"> mdi-delete </v-icon>
+        </template></v-data-table
+      >
     </div>
   </div>
 </template>
@@ -22,6 +30,9 @@ import pilotoService from "../services/pilotoService";
 export default {
   components: { CommonForm },
   data: () => ({
+    headerProps: {
+      sortByText: "Ordenar Por",
+    },
     fields: [
       {
         name: "name",
@@ -51,7 +62,9 @@ export default {
       { text: "Direccion", value: "address" },
       { text: "DPI", value: "dpi" },
       { text: "Telefono", value: "number" },
+      { text: "Acciones", value: "actions" },
     ],
+    editData: {},
     rows: [],
   }),
   mounted() {
@@ -60,10 +73,21 @@ export default {
   methods: {
     async getData() {
       const { data } = await pilotoService.getAll();
-      this.rows = data;
+      this.rows = data.map((item) => ({ ...item, actions: "" }));
     },
     async create(data) {
       await pilotoService.create(data);
+      this.getData();
+    },
+    async deleteItem(id) {
+      await pilotoService.delete(id);
+      this.getData();
+    },
+    async readOne(id) {
+      this.editData = await pilotoService.getOne(id);
+    },
+    async update(data, id) {
+      await pilotoService.update(data, id);
       this.getData();
     },
   },

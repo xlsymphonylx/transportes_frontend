@@ -8,4 +8,13 @@ export default {
   create(data) {
     return axios.post("/api/transportista", data, axiosConfig);
   },
+  getOne(id) {
+    return axios.get(`/api/transportista/${id}`, axiosConfig);
+  },
+  delete(id) {
+    return axios.delete(`/api/transportista/${id}`, axiosConfig);
+  },
+  update(data, primaryKey) {
+    return axios.patch(`/api/transportista/${primaryKey}`, data, axiosConfig);
+  },
 };

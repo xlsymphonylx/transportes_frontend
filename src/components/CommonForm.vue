@@ -19,18 +19,31 @@
   <form @submit.prevent="submit">
     <div class="form-group" v-for="field in fields" :key="field.name">
       <v-text-field
+        v-if="field.type === 'text'"
         v-model="formData[field.name]"
         :error-messages="errors"
         :label="field.label"
         required
       ></v-text-field>
+      <v-select
+        v-if="field.type === 'select'"
+        v-model="formData[field.name]"
+        :error-messages="errors"
+        :label="field.label"
+        :items="field.items"
+        :item-text="field.itemText"
+        :item-value="field.itemValue"
+        no-data-text="Nada Registrado"
+        required
+        @change="
+          field.name === 'destino_id'
+            ? getBodegasDestino(formData[field.name])
+            : null
+        "
+      >
+      </v-select>
     </div>
-    <v-btn
-      class="mr-4 success"
-      type="submit"
-      :disabled="invalid"
-      @click="onSave"
-    >
+    <v-btn class="mr-4 success" :disabled="invalid" @click="onSave">
       Guardar
     </v-btn>
     <v-btn class="mr-4 danger" @click="onCancel"> cancelar </v-btn>
@@ -54,6 +67,10 @@ export default {
       type: String,
       default: "PLACEHOLDER",
     },
+    editData: {
+      type: Object,
+      default: () => {},
+    },
   },
   data: () => ({
     invalid: null,
@@ -61,14 +78,25 @@ export default {
     submit: false,
     formData: {},
   }),
+  watch: {
+    editData() {
+      this.fields.map((item) => {
+        this.formData[item.name] = this.editData[item.name];
+      });
+    },
+  },
   methods: {
     onSave() {
       this.$emit("save", this.formData);
     },
     onCancel() {
       this.fields.forEach((field) => {
-        this.formData[field] = "";
+        this.formData[field.name] = "";
       });
+      this.$forceUpdate();
+    },
+    getBodegasDestino(data) {
+      this.$emit("getBodegasDestino", data);
     },
   },
 };

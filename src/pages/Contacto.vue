@@ -3,15 +3,16 @@
     <common-form :fields="fields" @save="create" />
     <div class="margintop">
       <v-data-table
+        :header-props="headerProps"
         :headers="headers"
         :items-per-page="5"
-        :header-props="headerProps"
         :items="rows"
         class="elevation-1"
         hide-default-footer
         no-data-text="No Resultados"
         no-results-text="No Resultados"
-        ><template #[`item.actions`]="{ item }">
+      >
+        <template #[`item.actions`]="{ item }">
           <v-icon small class="mr-2" @click="readOne(item.id)">
             mdi-pencil
           </v-icon>
@@ -24,8 +25,7 @@
 
 <script>
 import CommonForm from "../components/CommonForm.vue";
-import ubicacionService from "../services/ubicacionService";
-
+import contactoService from "../services/contactoService";
 export default {
   components: { CommonForm },
   data: () => ({
@@ -39,43 +39,48 @@ export default {
         label: "Nombre",
       },
       {
-        name: "address",
+        name: "number",
         type: "text",
-        label: "Direccion",
+        label: "Numero",
+      },
+      {
+        name: "email",
+        type: "text",
+        label: "Email",
       },
     ],
 
     headers: [
       { text: "ID", value: "id" },
       { text: "Nombre", value: "name" },
-      { text: "Direccion", value: "address" },
+      { text: "Numero", value: "number" },
+      { text: "Email", value: "email" },
       { text: "Acciones", value: "actions" },
     ],
-    editData: {},
     rows: [],
+    editData: {},
   }),
   mounted() {
     this.getData();
   },
   methods: {
     async getData() {
-      const { data } = await ubicacionService.getAll();
-
+      const { data } = await contactoService.getAll();
       this.rows = data.map((item) => ({ ...item, actions: "" }));
     },
     async create(data) {
-      await ubicacionService.create(data);
+      await contactoService.create(data);
       this.getData();
     },
     async deleteItem(id) {
-      await ubicacionService.delete(id);
+      await contactoService.delete(id);
       this.getData();
     },
     async readOne(id) {
-      this.editData = await ubicacionService.getOne(id);
+      this.editData = await contactoService.getOne(id);
     },
     async update(data, id) {
-      await ubicacionService.update(data, id);
+      await contactoService.update(data, id);
       this.getData();
     },
   },

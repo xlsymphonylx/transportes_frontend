@@ -8,4 +8,13 @@ export default {
   create(data) {
     return axios.post("/api/bodega", data, axiosConfig);
   },
+  getOne(id) {
+    return axios.get(`/api/bodega/${id}`, axiosConfig);
+  },
+  delete(id) {
+    return axios.delete(`/api/bodega/${id}`, axiosConfig);
+  },
+  update(data, primaryKey) {
+    return axios.patch(`/api/bodega/${primaryKey}`, data, axiosConfig);
+  },
 };

@@ -8,4 +8,13 @@ export default {
   create(data) {
     return axios.post("/api/accion", data, axiosConfig);
   },
+  getOne(id) {
+    return axios.get(`/api/accion/${id}`, axiosConfig);
+  },
+  delete(id) {
+    return axios.delete(`/api/accion/${id}`, axiosConfig);
+  },
+  update(data, primaryKey) {
+    return axios.patch(`/api/accion/${primaryKey}`, data, axiosConfig);
+  },
 };
