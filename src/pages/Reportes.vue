@@ -79,6 +79,29 @@
       no-results-text="No Resultados"
     >
     </v-data-table>
+    <h3 style="margin-top: 3rem">Reporte por Mes</h3>
+    <v-select
+      v-model="selectedMonth"
+      label="Mes"
+      :items="months"
+      item-text="name"
+      item-value="value"
+      no-data-text="Nada Registrado"
+    />
+    <div class="text-center" style="margin: 2rem">
+      <v-btn class="mr-4 success" @click="filterByMonth"> Filtrar </v-btn>
+    </div>
+    <v-data-table
+      :headers="monthlyReportsHeaders"
+      :header-props="headerProps"
+      :items="byMonthReportsData"
+      :items-per-page="15"
+      class="elevation-1"
+      title="Reportes Por Usuario"
+      no-data-text="No Resultados"
+      no-results-text="No Resultados"
+    >
+    </v-data-table>
   </div>
 </template>
 
@@ -96,6 +119,7 @@ export default {
     transportistaReportsData: [],
     usersReportsData: [],
     originalMonthlyReportsData: [],
+    byMonthReportsData: [],
     years: ["2022", "2021", "2020", "2019", "2018", "2017"],
     months: [
       {
@@ -227,6 +251,16 @@ export default {
           movimientos: accionesCount,
         };
       });
+    },
+    async filterByMonth() {
+      const { selectedMonth } = this;
+      this.byMonthReportsData = this.originalMonthlyReportsData.filter(
+        (item) => {
+          const separated = item.fecha.split("-");
+          const date = separated[1];
+          return date === selectedMonth;
+        }
+      );
     },
   },
 };
