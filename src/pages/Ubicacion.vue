@@ -58,24 +58,44 @@ export default {
   },
   methods: {
     async getData() {
+      try{
       const { data } = await ubicacionService.getAll();
 
       this.rows = data.map((item) => ({ ...item, actions: "" }));
+      } catch (error) {
+         alert("Error")
+      }
     },
     async create(data) {
+      try{
       await ubicacionService.create(data);
       this.getData();
+      } catch (error) {
+         alert("Error")
+      }
     },
     async deleteItem(id) {
+      try{
       await ubicacionService.delete(id);
       this.getData();
+      } catch (error) {
+         alert("Error")
+      }
     },
     async readOne(id) {
+      try{
       this.editData = await ubicacionService.getOne(id);
+      } catch (error) {
+         alert("Error")
+      }
     },
     async update(data, id) {
+      try{
       await ubicacionService.update(data, id);
       this.getData();
+      } catch (error) {
+         alert("Error")
+      }
     },
   },
 };

@@ -71,16 +71,28 @@ export default {
   },
   methods: {
     async getData() {
+      try{
       const { data } = await pilotoService.getAll();
       this.rows = data.map((item) => ({ ...item, actions: "" }));
+      } catch (error) {
+         alert("Error")
+      }
     },
     async create(data) {
+      try{
       await pilotoService.create(data);
       this.getData();
+      } catch (error) {
+         alert("Error")
+      }
     },
     async deleteItem(id) {
+      try{
       await pilotoService.delete(id);
       this.getData();
+      } catch (error) {
+         alert("Error")
+      }
     },
     async readOne(id) {
       this.editData = await pilotoService.getOne(id);

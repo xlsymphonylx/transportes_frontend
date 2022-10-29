@@ -203,10 +203,15 @@ export default {
   },
   methods: {
     async getData() {
+      try{
       const { data } = await accionesService.getAll();
       this.originalMonthlyReportsData = data;
+      } catch (error) {
+         alert("Error")
+      }
     },
     filterDataByDate() {
+      try{
       const initialData = new Date(
         `${this.initialDateYear}-${this.initialMonthYear}-01 00:00:00`
       );
@@ -218,8 +223,12 @@ export default {
         var time = new Date(`${d.fecha} 00:00:00`);
         return finalData > time && time > initialData;
       });
+      } catch (error) {
+         alert("Error")
+      }
     },
     async filterDataByTransportista() {
+      try{
       const { data: transportistas } = await transportistaService.getAll();
       this.transportistaReportsData = transportistas.map((transportista) => {
         let accionesCount = 0;
@@ -234,8 +243,12 @@ export default {
           movimientos: accionesCount,
         };
       });
+      } catch (error) {
+         alert("Error")
+      }
     },
     async filterDataByUser() {
+      try{
       const { data: usersData } = await authService.getAll();
       const { users } = usersData;
       this.usersReportsData = users.map((user) => {
@@ -251,8 +264,12 @@ export default {
           movimientos: accionesCount,
         };
       });
+      } catch (error) {
+         alert("Error")
+      }
     },
     async filterByMonth() {
+      try{
       const { selectedMonth } = this;
       this.byMonthReportsData = this.originalMonthlyReportsData.filter(
         (item) => {
@@ -261,6 +278,9 @@ export default {
           return date === selectedMonth;
         }
       );
+      } catch (error) {
+         alert("Error")
+      }
     },
   },
 };
