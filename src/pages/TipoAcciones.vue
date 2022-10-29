@@ -4,11 +4,10 @@
     <div class="margintop">
       <v-data-table
         :headers="headers"
-        :items-per-page="5"
+        :items-per-page="15"
         :header-props="headerProps"
         :items="rows"
         class="elevation-1"
-        hide-default-footer
         no-data-text="No Resultados"
         no-results-text="No Resultados"
         ><template #[`item.actions`]="{ item }">

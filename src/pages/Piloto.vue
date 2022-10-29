@@ -5,10 +5,9 @@
       <v-data-table
         :items="rows"
         :headers="headers"
-        :items-per-page="5"
+        :items-per-page="15"
         :header-props="headerProps"
         class="elevation-1"
-        hide-default-footer
         no-data-text="No Resultados"
         no-results-text="No Resultados"
       >

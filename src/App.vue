@@ -82,6 +82,22 @@
               <v-list-item-title>Contacto</v-list-item-title>
             </v-list-item>
           </router-link>
+          <router-link to="/estudiantes">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-account-school</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Estudiantes API</v-list-item-title>
+            </v-list-item>
+          </router-link>
+           <router-link to="/reportes">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-account-school</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Reportes</v-list-item-title>
+            </v-list-item>
+          </router-link>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>

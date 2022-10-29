@@ -88,6 +88,7 @@ export default {
   methods: {
     onSave() {
       this.$emit("save", this.formData);
+      this.onCancel();
     },
     onCancel() {
       this.fields.forEach((field) => {
