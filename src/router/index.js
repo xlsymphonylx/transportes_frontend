@@ -11,6 +11,7 @@ const routerOptions = [
   { path: "/cabezal", component: "Cabezal" },
   { path: "/contacto", component: "Contacto" },
   { path: "/estudiantes", component: "Students" },
+  { path: "/estudiantes-grupo-3", component: "G3Students" },
   { path: "/reportes", component: "Reportes" },
   { path: "/", component: "Home" },
   { path: "*", component: "NotFound" },

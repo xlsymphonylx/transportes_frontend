@@ -1,17 +1,75 @@
 <template>
   <div>
+    <h3 style="margin-top: 1rem">Estudiantes por Departamento</h3>
     <v-text-field
-      v-model="search"
+      v-model="searchByDepartmentData"
       append-icon="mdi-magnify"
       label="Buscar"
       single-line
       hide-details
     ></v-text-field>
     <v-data-table
-      :headers="headers"
+      :headers="headersByDepartmentData"
       :header-props="headerProps"
-      :search="search"
-      :items="studentsByDepartmentMunicipalityData"
+      :search="searchByDepartmentData"
+      :items="studentsByDepartmentData"
+      :items-per-page="5"
+      class="elevation-1"
+      no-data-text="No Resultados"
+      no-results-text="No Resultados"
+    >
+    </v-data-table>
+    <h3 style="margin-top: 1rem">Estudiantes por Municipalidad</h3>
+    <v-text-field
+      v-model="searchByMunicipalityData"
+      append-icon="mdi-magnify"
+      label="Buscar"
+      single-line
+      hide-details
+    ></v-text-field>
+    <v-data-table
+      :headers="headersByMunicipalityData"
+      :header-props="headerProps"
+      :search="searchByMunicipalityData"
+      :items="studentsByMunicipalityData"
+      :items-per-page="5"
+      class="elevation-1"
+      no-data-text="No Resultados"
+      no-results-text="No Resultados"
+    >
+    </v-data-table>
+    <h3 style="margin-top: 1rem">Estudiantes por Escuela</h3>
+    <v-text-field
+      v-model="searchBySchoolData"
+      append-icon="mdi-magnify"
+      label="Buscar"
+      single-line
+      hide-details
+    ></v-text-field>
+    <v-data-table
+      :headers="headersBySchoolData"
+      :header-props="headerProps"
+      :search="searchBySchoolData"
+      :items="studentsBySchoolData"
+      :items-per-page="5"
+      class="elevation-1"
+      no-data-text="No Resultados"
+      no-results-text="No Resultados"
+    >
+    </v-data-table>
+    <h3 style="margin-top: 1rem">Estudiantes por Profesor</h3>
+    <v-text-field
+      v-model="searchByProfessor"
+      append-icon="mdi-magnify"
+      label="Buscar"
+      single-line
+      hide-details
+    ></v-text-field>
+    <v-data-table
+      :headers="headersBySchoolData"
+      :header-props="headerProps"
+      :search="searchByProfessor"
+      :items="studentsByProfessor"
       :items-per-page="5"
       class="elevation-1"
       no-data-text="No Resultados"
@@ -28,24 +86,55 @@ export default {
     headerProps: {
       sortByText: "Ordenar Por",
     },
-    headers: [
+    headersByDepartmentData: [
       { text: "ID", value: "id" },
       { text: "Nombre", value: "name" },
       { text: "Estudiantes Enrolados", value: "count_student_enrollments" },
     ],
-    search: null,
-    studentsByDepartmentMunicipalityData: [],
+    headersByMunicipalityData: [
+      { text: "ID", value: "id" },
+      { text: "Nombre", value: "name" },
+      { text: "Estudiantes Enrolados", value: "count_student_enrollments" },
+    ],
+    headersBySchoolData: [
+      { text: "ID", value: "id" },
+      { text: "Nombre", value: "name" },
+      { text: "ID Municipalida", value: "municipality_id" },
+    ],
+    searchByDepartmentData: null,
+    searchByMunicipalityData: null,
+    searchBySchoolData: null,
+    searchByProfessor: null,
+    studentsByMunicipalityData: [],
+    studentsByDepartmentData: [],
+    studentsBySchoolData: [],
+    studentsByProfessor: [],
   }),
   mounted() {
-    this.getStudentsByMunicipalityDepartment();
+    this.getStudentsByDepartment();
+    this.getStudentsByMunicipality();
+    this.getStudentsBySchool();
+    this.getStudentsByProfessor();
   },
   methods: {
-    async getStudentsByMunicipalityDepartment() {
+    async getStudentsByDepartment() {
       const { data } = await studentsService.studentsByDepartmentMunicipality(
         true,
         false
       );
-      this.studentsByDepartmentMunicipalityData = data;
+      this.studentsByDepartmentData = data;
+    },
+    async getStudentsByMunicipality() {
+      const { data } = await studentsService.studentsByDepartmentMunicipality();
+      this.studentsByMunicipalityData = data;
+    },
+    async getStudentsBySchool() {
+      const { data } = await studentsService.studentsBySchool();
+      this.studentsBySchoolData = data;
+    },
+    async getStudentsByProfessor() {
+      const { data } = await studentsService.studentsByProfessor();
+      this.studentsByProfessor = data;
     },
   },
 };

@@ -1,6 +1,6 @@
 export default {
-  baseURL: "http://sicoep.org/",
+  baseURL: "https://sicoep.org/",
   headers: {
-    "Access-Control-Allow-Origin": "http://sicoep.org/",
+    "Access-Control-Allow-Origin": "https://sicoep.org/",
   },
 };
