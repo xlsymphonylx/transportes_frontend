@@ -47,17 +47,54 @@
       no-results-text="No Resultados"
     >
     </v-data-table>
+    <h3 style="margin-top: 3rem">Reporte por Transportista</h3>
+    <div class="text-center" style="margin: 2rem">
+      <v-btn class="mr-4 success" @click="filterDataByTransportista">
+        Filtrar
+      </v-btn>
+    </div>
+    <v-data-table
+      :headers="transportistaReportsHeaders"
+      :header-props="headerProps"
+      :items="transportistaReportsData"
+      :items-per-page="15"
+      class="elevation-1"
+      title="Reportes Por Movimiento"
+      no-data-text="No Resultados"
+      no-results-text="No Resultados"
+    >
+    </v-data-table>
+    <h3 style="margin-top: 3rem">Reporte por Usuario</h3>
+    <div class="text-center" style="margin: 2rem">
+      <v-btn class="mr-4 success" @click="filterDataByUser"> Filtrar </v-btn>
+    </div>
+    <v-data-table
+      :headers="userReportsHeaders"
+      :header-props="headerProps"
+      :items="usersReportsData"
+      :items-per-page="15"
+      class="elevation-1"
+      title="Reportes Por Usuario"
+      no-data-text="No Resultados"
+      no-results-text="No Resultados"
+    >
+    </v-data-table>
   </div>
 </template>
 
 <script>
 import accionesService from "../services/accionesService";
+import transportistaService from "../services/transportistaService";
+import authService from "../services/authService";
+
 export default {
   data: () => ({
     headerProps: {
       sortByText: "Ordenar Por",
     },
     monthlyReportsData: [],
+    transportistaReportsData: [],
+    usersReportsData: [],
     originalMonthlyReportsData: [],
     years: ["2022", "2021", "2020", "2019", "2018", "2017"],
     months: [
@@ -114,7 +151,6 @@ export default {
     initialMonthYear: null,
     finalMonthYear: null,
     finalDateYear: null,
-    dateFilterData: [],
     monthlyReportsHeaders: [
       { text: "ID", value: "id" },
       { text: "Fecha", value: "fecha" },
@@ -126,6 +162,16 @@ export default {
       { text: "Cabezal", value: "cabezalName" },
       { text: "Piloto", value: "pilotoName" },
       { text: "Transportista", value: "transportistaName" },
+    ],
+    transportistaReportsHeaders: [
+      { text: "ID", value: "id" },
+      { text: "Transportista", value: "name" },
+      { text: "Movimientos", value: "movimientos" },
+    ],
+    userReportsHeaders: [
+      { text: "ID", value: "id" },
+      { text: "Usuario", value: "name" },
+      { text: "Movimientos", value: "movimientos" },
     ],
   }),
   mounted() {
@@ -147,6 +193,39 @@ export default {
       this.monthlyReportsData = this.originalMonthlyReportsData.filter((d) => {
         var time = new Date(`${d.fecha} 00:00:00`);
         return finalData > time && time > initialData;
+      });
+    },
+    async filterDataByTransportista() {
+      const { data: transportistas } = await transportistaService.getAll();
+      this.transportistaReportsData = transportistas.map((transportista) => {
+        let accionesCount = 0;
+        this.originalMonthlyReportsData.map((item) => {
+          if (transportista.name === item.transportistaName) {
+            accionesCount++;
+          }
+        });
+        return {
+          id: transportista.id,
+          name: transportista.name,
+          movimientos: accionesCount,
+        };
+      });
+    },
+    async filterDataByUser() {
+      const { data: usersData } = await authService.getAll();
+      const { users } = usersData;
+      this.usersReportsData = users.map((user) => {
+        let accionesCount = 0;
+        this.originalMonthlyReportsData.map((item) => {
+          if (user.id === item.user_id) {
+            accionesCount++;
+          }
+        });
+        return {
+          id: user.id,
+          name: user.name,
+          movimientos: accionesCount,
+        };
       });
     },
   },

@@ -11,4 +11,7 @@ export default {
   userInfo() {
     return axios.get("/api/userInfo", axiosConfig);
   },
+  getAll() {
+    return axios.get("/api/users", axiosConfig);
+  },
 };
