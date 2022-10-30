@@ -1,6 +1,6 @@
 export default {
-  baseURL: "http://proyectodesweb.centralus.cloudapp.azure.com/",
+  baseURL: "https://proyectodesweb.centralus.cloudapp.azure.com/",
   headers: {
-    "Access-Control-Allow-Origin": "http://proyectodesweb.centralus.cloudapp.azure.com/",
+    "Access-Control-Allow-Origin": "https://proyectodesweb.centralus.cloudapp.azure.com/",
   },
 };
