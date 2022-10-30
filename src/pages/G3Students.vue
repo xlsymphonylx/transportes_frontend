@@ -74,12 +74,20 @@ export default {
   },
   methods: {
     async getAlumnosInscritos() {
+      try{
       const { data } = await studentsService.getAlumnosInscritos();
       this.alumnosInscritos = data;
+      } catch (error) {
+         alert("Error")
+      }
     },
     async getCatedraticosAsignados() {
+      try{
       const { data } = await studentsService.getCatedraticosAsignados();
       this.catedraticosInscritos = data;
+      } catch (error) {
+         alert("Error")
+      }
     },
   },
 };

@@ -78,27 +78,47 @@ export default {
   },
   methods: {
     async getData() {
+      try{
       const { data } = await cabezalService.getAll();
       const { data: pilotos } = await pilotoService.getAll();
       const { data: transportistas } = await transportistaService.getAll();
       this.fields[2]["items"] = pilotos;
       this.fields[3]["items"] = transportistas;
       this.rows = data.map((item) => ({ ...item, actions: "" }));
+      } catch (error) {
+         alert("Error")
+      }
     },
     async create(data) {
+      try{
       await cabezalService.create(data);
       this.getData();
+      } catch (error) {
+         alert("Error")
+      }
     },
     async deleteItem(id) {
+      try{
       await cabezalService.delete(id);
       this.getData();
+      } catch (error) {
+         alert("Error")
+      }
     },
     async readOne(id) {
+      try{
       this.editData = await cabezalService.getOne(id);
+      } catch (error) {
+         alert("Error")
+      }
     },
     async update(data, id) {
+      try{
       await cabezalService.update(data, id);
       this.getData();
+      } catch (error) {
+         alert("Error")
+      }
     },
   },
 };
