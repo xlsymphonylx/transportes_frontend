@@ -46,26 +46,19 @@ export default {
   }),
   methods: {
     async login(loginData) {
-try{
       const { data } = await authService.login(loginData);
       const { access_token } = data;
       axios.defaults.headers.common = {
         Authorization: `Bearer ${access_token}`,
       };
-      } catch (error) {
-         alert("Error")
-      }
     },
     async register(registerData) {
-      try{
-      const { data } = await authService.register(registerData);
-      const { access_token } = data;
-      axios.defaults.headers.common = {
-        Authorization: `Bearer ${access_token}`,
-      };
-      } catch (error) {
-         alert("Error")
-      }
+        const { data } = await authService.register(registerData);
+        const { access_token } = data;
+        axios.defaults.headers.common = {
+          Authorization: `Bearer ${access_token}`,
+        };
+     
     },
   },
 };

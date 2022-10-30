@@ -62,45 +62,25 @@ export default {
   },
   methods: {
     async getData() {
-      try {
       const { data } = await bodegaService.getAll();
       const { data: ubicaciones } = await ubicacionService.getAll();
       this.fields[1]["items"] = ubicaciones;
       this.rows = data.map((item) => ({ ...item, actions: "" }));
-      } catch (error) {
-         alert("Error")
-      }
     },
     async create(data) {
-      try{
       await bodegaService.create(data);
       this.getData();
-      } catch (error) {
-         alert("Error")
-      }
     },
     async deleteItem(id) {
-      try{
       await bodegaService.delete(id);
       this.getData();
-      } catch (error) {
-         alert("Error")
-      }
     },
     async readOne(id) {
-      try{
       this.editData = await bodegaService.getOne(id);
-      } catch (error) {
-         alert("Error")
-      }
     },
     async update(data, id) {
-      try{
       await bodegaService.update(data, id);
       this.getData();
-      } catch (error) {
-         alert("Error")
-      }
     },
   },
 };

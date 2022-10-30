@@ -64,43 +64,23 @@ export default {
   },
   methods: {
     async getData() {
-      try{
       const { data } = await contactoService.getAll();
       this.rows = data.map((item) => ({ ...item, actions: "" }));
-      } catch (error) {
-         alert("Error")
-      }
     },
     async create(data) {
-      try{
       await contactoService.create(data);
       this.getData();
-      } catch (error) {
-         alert("Error")
-      }
     },
     async deleteItem(id) {
-      try{
       await contactoService.delete(id);
       this.getData();
-      } catch (error) {
-         alert("Error")
-      }
     },
     async readOne(id) {
-      try{
       this.editData = await contactoService.getOne(id);
-      } catch (error) {
-         alert("Error")
-      }
     },
     async update(data, id) {
-      try{
       await contactoService.update(data, id);
       this.getData();
-      } catch (error) {
-         alert("Error")
-      }
     },
   },
 };

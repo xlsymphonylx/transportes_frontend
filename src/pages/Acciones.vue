@@ -126,61 +126,57 @@ export default {
     async getData() {
       try {
         const { data } = await accionesService.getAll();
-      const { data: tipoAcciones } = await tipoAccionesService.getAll();
-      const { data: cabezales } = await cabezalService.getAll();
-      const { data: ubicaciones } = await ubicacionService.getAll();
-      this.fields[2]["items"] = tipoAcciones;
-      this.fields[3]["items"] = cabezales;
-      this.fields[4]["items"] = ubicaciones;
-      this.fields[5]["items"] = ubicaciones;
-      this.rows = data.map((item) => ({ ...item, actions: "" }));
-      
+        const { data: tipoAcciones } = await tipoAccionesService.getAll();
+        const { data: cabezales } = await cabezalService.getAll();
+        const { data: ubicaciones } = await ubicacionService.getAll();
+        this.fields[2]["items"] = tipoAcciones;
+        this.fields[3]["items"] = cabezales;
+        this.fields[4]["items"] = ubicaciones;
+        this.fields[5]["items"] = ubicaciones;
+        this.rows = data.map((item) => ({ ...item, actions: "" }));
       } catch (error) {
-         alert("Error")
+        alert("Error");
       }
     },
     async getBodegasDestino(destino) {
-        try {
-      const { data } = await bodegaService.getAll();
-      this.fields[6]["items"] = data.filter(
-        (item) => item.ubicacion_id === destino
-      );
+      try {
+        const { data } = await bodegaService.getAll();
+        this.fields[6]["items"] = data.filter(
+          (item) => item.ubicacion_id === destino
+        );
       } catch (error) {
-         alert("Error")
+        alert("Error");
       }
     },
     async create(data) {
-        try {
-      await accionesService.create(data);
-      this.getData();
-
-       } catch (error) {
-         alert("Error")
+      try {
+        await accionesService.create(data);
+        this.getData();
+      } catch (error) {
+        alert("Error");
       }
     },
     async deleteItem(id) {
-        try {
-      await accionesService.delete(id);
-      this.getData();
-
+      try {
+        await accionesService.delete(id);
+        this.getData();
       } catch (error) {
-         alert("Error")
+        alert("Error");
       }
     },
     async readOne(id) {
-        try {
-      this.editData = await accionesService.getOne(id);
-
-       } catch (error) {
-         alert("Error")
+      try {
+        this.editData = await accionesService.getOne(id);
+      } catch (error) {
+        alert("Error");
       }
     },
     async update(data, id) {
-        try {
-      await accionesService.update(data, id);
-      this.getData();
+      try {
+        await accionesService.update(data, id);
+        this.getData();
       } catch (error) {
-         alert("Error")
+        alert("Error");
       }
     },
   },

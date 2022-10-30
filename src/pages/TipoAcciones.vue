@@ -36,7 +36,6 @@ export default {
         type: "text",
         label: "Descripcion",
       },
-   
     ],
 
     headers: [
@@ -52,43 +51,23 @@ export default {
   },
   methods: {
     async getData() {
-      try{
       const { data } = await tipoAccionesService.getAll();
       this.rows = data.map((item) => ({ ...item, actions: "" }));
-      } catch (error) {
-         alert("Error")
-      }
     },
     async create(data) {
-      try{
       await tipoAccionesService.create(data);
       this.getData();
-      } catch (error) {
-         alert("Error")
-      }
     },
     async deleteItem(id) {
-      try{
       await tipoAccionesService.delete(id);
       this.getData();
-      } catch (error) {
-         alert("Error")
-      }
     },
     async readOne(id) {
-      try{
       this.editData = await tipoAccionesService.getOne(id);
-      } catch (error) {
-         alert("Error")
-      }
     },
     async update(data, id) {
-      try {
       await tipoAccionesService.update(data, id);
       this.getData();
-      } catch (error) {
-         alert("Error")
-      }
     },
   },
 };

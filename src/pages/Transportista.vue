@@ -67,47 +67,26 @@ export default {
   },
   methods: {
     async getData() {
-      try{
       const { data } = await transportistaService.getAll();
       const { data: contactos } = await contactoService.getAll();
       this.fields[2]["items"] = contactos;
       this.rows = data.map((item) => ({ ...item, actions: "" }));
-      } catch (error) {
-         alert("Error")
-      }
     },
     async create(data) {
-      try{
       await transportistaService.create(data);
       this.getData();
-      } catch (error) {
-         alert("Error")
-      }
     },
     async deleteItem(id) {
-      try{
       await transportistaService.delete(id);
       this.getData();
-      } catch (error) {
-         alert("Error")
-      }
     },
     async readOne(id) {
-      try{
       this.editData = await transportistaService.getOne(id);
-      } catch (error) {
-         alert("Error")
-      }
     },
     async update(data, id) {
-      try{
       await transportistaService.update(data, id);
       this.getData();
-      } catch (error) {
-         alert("Error")
-      }
     },
-
   },
 };
 </script>

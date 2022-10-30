@@ -118,39 +118,23 @@ export default {
   },
   methods: {
     async getStudentsByDepartment() {
-      try{
       const { data } = await studentsService.studentsByDepartmentMunicipality(
         true,
         false
       );
       this.studentsByDepartmentData = data;
-      } catch (error) {
-         alert("Error")
-      }
     },
     async getStudentsByMunicipality() {
-      try{
       const { data } = await studentsService.studentsByDepartmentMunicipality();
       this.studentsByMunicipalityData = data;
-      } catch (error) {
-         alert("Error")
-      }
     },
     async getStudentsBySchool() {
-      try{
       const { data } = await studentsService.studentsBySchool();
       this.studentsBySchoolData = data;
-      } catch (error) {
-         alert("Error")
-      }
     },
     async getStudentsByProfessor() {
-      try{
       const { data } = await studentsService.studentsByProfessor();
       this.studentsByProfessor = data;
-      } catch (error) {
-         alert("Error")
-      }
     },
   },
 };
